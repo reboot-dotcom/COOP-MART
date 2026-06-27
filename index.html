@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coop Mart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="phone-container">
+
+    <!-- ==================== LOGIN SCREEN ==================== -->
+    <div id="login-screen" class="screen login-screen active">
+        <div class="logo-block">
+            <img src="img/cooplogo.jpg" alt="COOP MART Logo">
+        </div>
+        
+        <h1 class="title-text">COOP MART</h1>
+        <p class="subtitle-text">sign in with your account</p>
+        
+        <div class="auth-card">
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="USER ID" id="student-id" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="PASSWORD" id="student-pass">
+            </div>
+            
+            <!-- Role Selection -->
+            <div class="role-selection">
+                <div class="role-option active" onclick="selectRole('user')" id="role-user">
+                    <i class="fa-solid fa-user"></i>
+                    <span>User</span>
+                </div>
+                <div class="role-option" onclick="selectRole('admin')" id="role-admin">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Admin</span>
+                </div>
+            </div>
+            <input type="hidden" id="selected-role" value="user">
+        </div>
+        
+        <button class="sign-in-btn" onclick="handleAuthLogin()">SIGN IN</button>
+    </div>
+
+    <!-- ==================== MAIN SCREEN (USER) ==================== -->
+    <div id="main-screen" class="screen">
+        <div class="main-header">
+            <div class="brand-title">COOPMART</div>
+            <div class="header-right">
+                <div class="lang-selector" onclick="handleAuthLogout()" title="Click to log out account">
+                    Logout <i class="fa-solid fa-right-from-bracket" style="font-size: 11px; margin-left: 2px;"></i>
+                </div>
+                <div class="bell-icon" onclick="navigateToNotifications()">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="bell-badge" id="bell-badge">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+            <input type="text" class="search-bar" placeholder="Search product here..." id="store-search-bar" autocomplete="off">
+            <i class="fa-solid fa-microphone mic-icon-right"></i>
+        </div>
+
+        <div class="section-title-row">
+            <h3>Categories</h3>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="categories-container">
+            <div class="category-card" style="background-color: var(--cat-food);" onclick="navigateToCategory('Food')">
+                <i class="fa-solid fa-utensils cat-icon"></i>
+                <span>Food</span>
+            </div>
+            <div class="category-card" style="background-color: var(--cat-toiletries);" onclick="navigateToCategory('Toiletries')">
+                <i class="fa-solid fa-pump-soap cat-icon"></i>
+                <span>Toiletries</span>
+            </div>
+            <div class="category-card" style="background-color: var(--cat-stationery);" onclick="navigateToCategory('Stationery')">
+                <i class="fa-solid fa-pen-nib cat-icon"></i>
+                <span>Stationery</span>
+            </div>
+            <div class="category-card" style="background-color: var(--cat-drinks);" onclick="navigateToCategory('Drinks')">
+                <i class="fa-solid fa-bottle-water cat-icon"></i>
+                <span>Drinks</span>
+            </div>
+        </div>
+
+        <div class="section-title-row">
+            <h3>All products</h3>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="product-scroll-area">
+            <div class="product-grid" id="product-list-container">
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <i class="fa-solid fa-house nav-item active" onclick="navigateTo('main-screen')"></i>
+            <i class="fa-solid fa-border-all nav-item" onclick="navigateToAllProducts()"></i>
+            <div class="nav-cart-container" onclick="navigateTo('payment-screen')">
+                <button class="nav-cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                <div class="cart-badge" id="global-cart-badge" style="display: none;">0</div>
+            </div>
+            <i class="fa-solid fa-heart nav-item" onclick="navigateToWishlist()"></i>
+            <i class="fa-solid fa-user nav-item" onclick="navigateTo('me-screen')"></i>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN SCREEN ==================== -->
+    <div id="admin-screen" class="screen">
+        <div class="admin-header">
+            <div class="admin-brand">COOPMART</div>
+            <div class="admin-header-right">
+                <span class="admin-user"><i class="fa-solid fa-user-tie"></i> Admin</span>
+                <div class="admin-logout" onclick="handleAuthLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <!-- Admin Sidebar -->
+            <div class="admin-sidebar" id="admin-sidebar">
+                <div class="sidebar-menu">
+                    <div class="sidebar-item active" onclick="navigateAdmin('dashboard')">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('products')">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Products</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('orders')">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span>Orders</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('refunds')">
+                        <i class="fa-solid fa-file-pen"></i>
+                        <span>Refund Requests</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('points')">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Points Management</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('reports')">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Reports</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('users')">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Users</span>
+                    </div>
+                    <div class="sidebar-item" onclick="navigateAdmin('settings')">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </div>
+                    <div class="sidebar-item" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;" onclick="handleAuthLogout()">
+                        <i class="fa-solid fa-right-from-bracket" style="color: #F44336;"></i>
+                        <span style="color: #F44336;">Logout</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Content -->
+            <div class="admin-content">
+                <!-- ========== DASHBOARD ========== -->
+                <div id="admin-dashboard" class="admin-page active">
+                    <h2 class="admin-page-title">Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #E8F5E9; color: #4CAF50;">
+                                <i class="fa-solid fa-money-bill"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Today's Sales</span>
+                                <span class="stat-value">RM 3,245.60</span>
+                                <span class="stat-sub">Total Orders: 128</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #FFF3E0; color: #FF9800;">
+                                <i class="fa-solid fa-boxes"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Products</span>
+                                <span class="stat-value">256</span>
+                                <span class="stat-sub">Low Stock: 18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sales Chart - Line Graph -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Sales Overview (This Week)</h3>
+                            <button class="view-details-btn" onclick="showAppToast('Viewing full sales report...', 'info')">View details</button>
+                        </div>
+                        
+                        <!-- Line Chart -->
+                        <div class="line-chart-container" id="line-chart-container">
+                            <svg class="line-chart-svg" id="sales-chart" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid meet">
+                                <!-- SVG content will be generated by JavaScript -->
+                            </svg>
+                        </div>
+                        
+                        <!-- Sales Stats Summary -->
+                        <div class="sales-stats-summary">
+                            <div class="sales-stat-mini">
+                                <span class="stat-label">Total Sales</span>
+                                <span class="stat-value">RM 12,847</span>
+                            </div>
+                            <div class="sales-stat-mini">
+                                <span class="stat-label">Average</span>
+                                <span class="stat-value">RM 1,835</span>
+                            </div>
+                            <div class="sales-stat-mini">
+                                <span class="stat-label">Growth</span>
+                                <span class="stat-value high">↑ 12.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="recent-orders-card">
+                        <h3>Recent Orders</h3>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10025</span>
+                                <span class="order-date">May 14, 2024 - 2:15 PM</span>
+                            </div>
+                            <div class="order-status completed">Completed</div>
+                            <span class="order-amount">RM65.40</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10024</span>
+                                <span class="order-date">May 14, 2024 - 1:45 PM</span>
+                            </div>
+                            <div class="order-status pending">Pending</div>
+                            <span class="order-amount">RM42.00</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10023</span>
+                                <span class="order-date">May 14, 2024 - 12:30 PM</span>
+                            </div>
+                            <div class="order-status processing">Processing</div>
+                            <span class="order-amount">RM89.90</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10022</span>
+                                <span class="order-date">May 14, 2024 - 11:00 AM</span>
+                            </div>
+                            <div class="order-status completed">Completed</div>
+                            <span class="order-amount">RM23.50</span>
+                        </div>
+                        <button class="view-all-orders" onclick="navigateAdmin('orders')">View All Orders →</button>
+                    </div>
+                </div>
+
+                <!-- ========== PRODUCTS ========== -->
+                <div id="admin-products" class="admin-page">
+                    <div class="admin-page-header">
+                        <h2 class="admin-page-title">Products</h2>
+                        <button class="add-product-btn" onclick="showAddProduct()">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <div class="product-list-admin">
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/shampoo.jpg" alt="Shampoo" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E📦%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Shampoo</div>
+                                    <div class="product-admin-category">Toiletries</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">35 units</div>
+                            <div class="product-admin-price">RM 10.00</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/maggie.jpg" alt="Maggie Kari" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E🍜%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Maggie Kari</div>
+                                    <div class="product-admin-category">Food</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">50 units</div>
+                            <div class="product-admin-price">RM 5.00</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/potato.jpg" alt="Potato Chips" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E🍟%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Potato Chips</div>
+                                    <div class="product-admin-category">Food</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">42 units</div>
+                            <div class="product-admin-price">RM 6.50</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/mineral.jpg" alt="Mineral Water" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E💧%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Mineral Water</div>
+                                    <div class="product-admin-category">Drinks</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">100 units</div>
+                            <div class="product-admin-price">RM 2.00</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/notebook.jpg" alt="Notebook" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E📓%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Notebook</div>
+                                    <div class="product-admin-category">Stationery</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">60 units</div>
+                            <div class="product-admin-price">RM 4.50</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-admin-item">
+                            <div class="product-admin-info">
+                                <img src="img/pen.jpg" alt="Ballpoint Pen" class="product-admin-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'48\' height=\'48\'%3E%3Crect width=\'48\' height=\'48\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'24\' y=\'28\' text-anchor=\'middle\' font-size=\'20\' fill=\'%23999\'%3E🖊️%3C/text%3E%3C/svg%3E'">
+                                <div>
+                                    <div class="product-admin-name">Ballpoint Pen</div>
+                                    <div class="product-admin-category">Stationery</div>
+                                </div>
+                            </div>
+                            <div class="product-admin-stock">80 units</div>
+                            <div class="product-admin-price">RM 1.50</div>
+                            <div class="product-admin-actions">
+                                <button class="edit-btn" onclick="showEditProduct()"><i class="fa-solid fa-pen"></i></button>
+                                <button class="delete-btn" onclick="showAppToast('Product deleted!', 'success')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== ORDERS ========== -->
+                <div id="admin-orders" class="admin-page">
+                    <h2 class="admin-page-title">Orders</h2>
+                    <div class="orders-list">
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10025</span>
+                                <span class="order-date">May 14, 2024 - 2:15 PM</span>
+                                <span class="order-customer">Customer: Ahmad Faiz</span>
+                            </div>
+                            <div class="order-status completed">Completed</div>
+                            <span class="order-amount">RM65.40</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10024</span>
+                                <span class="order-date">May 14, 2024 - 1:45 PM</span>
+                                <span class="order-customer">Customer: Siti Nurhaliza</span>
+                            </div>
+                            <div class="order-status pending">Pending</div>
+                            <span class="order-amount">RM42.00</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD10023</span>
+                                <span class="order-date">May 14, 2024 - 12:30 PM</span>
+                                <span class="order-customer">Customer: Mohd Ali</span>
+                            </div>
+                            <div class="order-status processing">Processing</div>
+                            <span class="order-amount">RM89.90</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== REFUND REQUESTS ========== -->
+                <div id="admin-refunds" class="admin-page">
+                    <h2 class="admin-page-title">Refund Requests</h2>
+                    <div class="refund-request-list">
+                        <div class="refund-request-item">
+                            <div class="refund-info">
+                                <span class="refund-id">#REF001</span>
+                                <span class="refund-date">May 13, 2024</span>
+                                <span class="refund-customer">Ahmad Faiz</span>
+                            </div>
+                            <div class="refund-status pending">Pending Review</div>
+                            <button class="refund-action-btn" onclick="showAppToast('Refund approved!', 'success')">Approve</button>
+                        </div>
+                        <div class="refund-request-item">
+                            <div class="refund-info">
+                                <span class="refund-id">#REF002</span>
+                                <span class="refund-date">May 12, 2024</span>
+                                <span class="refund-customer">Siti Nurhaliza</span>
+                            </div>
+                            <div class="refund-status completed">Approved</div>
+                            <button class="refund-action-btn" style="background: #999;" onclick="showAppToast('Already approved', 'info')">Done</button>
+                        </div>
+                        <div class="refund-request-item">
+                            <div class="refund-info">
+                                <span class="refund-id">#REF003</span>
+                                <span class="refund-date">May 11, 2024</span>
+                                <span class="refund-customer">Mohd Ali</span>
+                            </div>
+                            <div class="refund-status rejected">Rejected</div>
+                            <button class="refund-action-btn" style="background: #999;" onclick="showAppToast('Already rejected', 'info')">Done</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== POINTS MANAGEMENT ========== -->
+                <div id="admin-points" class="admin-page">
+                    <h2 class="admin-page-title">Points Management</h2>
+                    <div class="points-management">
+                        <div class="points-summary">
+                            <div class="points-stat">
+                                <span class="points-label">Total Points Issued</span>
+                                <span class="points-value">1,230</span>
+                            </div>
+                            <div class="points-stat">
+                                <span class="points-label">Points Redeemed</span>
+                                <span class="points-value">2,450</span>
+                            </div>
+                            <div class="points-stat">
+                                <span class="points-label">Available Points</span>
+                                <span class="points-value">10,780</span>
+                            </div>
+                        </div>
+                        <div class="points-rules">
+                            <h4>Points Rules</h4>
+                            <ul>
+                                <li>✅ 1 point for every RM 1 spent</li>
+                                <li>✅ 50 points = RM 1 discount</li>
+                                <li>✅ Points expire after 6 months</li>
+                                <li>✅ Maximum 500 points per transaction</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== REPORTS ========== -->
+                <div id="admin-reports" class="admin-page">
+                    <h2 class="admin-page-title">Reports</h2>
+                    <div class="reports-list">
+                        <div class="report-item" onclick="showAppToast('Generating sales report...', 'info')">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+                                <span class="report-name">Monthly Sales Report</span>
+                                <span class="report-date">Generated: June 2024</span>
+                            </div>
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <div class="report-item" onclick="showAppToast('Generating product report...', 'info')">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <div>
+                                <span class="report-name">Product Inventory Report</span>
+                                <span class="report-date">Generated: June 2024</span>
+                            </div>
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <div class="report-item" onclick="showAppToast('Generating user report...', 'info')">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+                                <span class="report-name">User Activity Report</span>
+                                <span class="report-date">Generated: June 2024</span>
+                            </div>
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== USERS ========== -->
+                <div id="admin-users" class="admin-page">
+                    <h2 class="admin-page-title">Users</h2>
+                    <div class="users-list">
+                        <div class="user-item">
+                            <div class="user-avatar">A</div>
+                            <div class="user-info">
+                                <span class="user-name">Ahmad Faiz</span>
+                                <span class="user-email">ahmad@student.edu</span>
+                            </div>
+                            <div class="user-role">Student</div>
+                            <span class="user-status active">Active</span>
+                        </div>
+                        <div class="user-item">
+                            <div class="user-avatar">S</div>
+                            <div class="user-info">
+                                <span class="user-name">Siti Nurhaliza</span>
+                                <span class="user-email">siti@student.edu</span>
+                            </div>
+                            <div class="user-role">Student</div>
+                            <span class="user-status active">Active</span>
+                        </div>
+                        <div class="user-item">
+                            <div class="user-avatar">M</div>
+                            <div class="user-info">
+                                <span class="user-name">Mohd Ali</span>
+                                <span class="user-email">ali@student.edu</span>
+                            </div>
+                            <div class="user-role">Admin</div>
+                            <span class="user-status active">Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SETTINGS ========== -->
+                <div id="admin-settings" class="admin-page">
+                    <h2 class="admin-page-title">Settings</h2>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Store Name</span>
+                                <span class="setting-value">COOP MART</span>
+                            </div>
+                            <button class="setting-edit-btn" onclick="showAppToast('Edit store name', 'info')">Edit</button>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Delivery Fee</span>
+                                <span class="setting-value">RM 4.90</span>
+                            </div>
+                            <button class="setting-edit-btn" onclick="showAppToast('Edit delivery fee', 'info')">Edit</button>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Store Currency</span>
+                                <span class="setting-value">Malaysian Ringgit (RM)</span>
+                            </div>
+                            <button class="setting-edit-btn" onclick="showAppToast('Edit currency', 'info')">Edit</button>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <span class="setting-name">Low Stock Alert</span>
+                                <span class="setting-value">10 units</span>
+                            </div>
+                            <button class="setting-edit-btn" onclick="showAppToast('Edit stock alert', 'info')">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="edit-product-modal" class="admin-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Product</h3>
+                <button class="modal-close" onclick="closeEditProduct()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-input" value="Shampoo">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input">
+                        <option>Toiletries</option>
+                        <option>Food</option>
+                        <option>Drinks</option>
+                        <option>Stationery</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Selling Price (RM)</label>
+                    <input type="number" class="form-input" value="10.00">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Product Image</label>
+                    <input type="text" class="form-input" placeholder="img/product.jpg">
+                </div>
+                
+                <h4 style="margin: 20px 0 10px 0;">Stock Management</h4>
+                <div class="form-group">
+                    <label class="form-label">Current Stock</label>
+                    <input type="number" class="form-input" value="35" readonly style="background: #f5f5f5;">
+                </div>
+                <div class="stock-controls">
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">Add Stock</label>
+                        <input type="number" class="form-input" placeholder="+ 20 units">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label class="form-label">Reduce Stock</label>
+                        <input type="number" class="form-input" placeholder="- 0 units">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">New Total Stock</label>
+                    <input type="number" class="form-input" value="55" readonly style="background: #f5f5f5;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Minimum Stock Alert</label>
+                    <input type="number" class="form-input" value="10">
+                </div>
+
+                <h4 style="margin: 20px 0 10px 0;">Product Status</h4>
+                <div class="status-options">
+                    <label class="status-option">
+                        <input type="radio" name="status" checked> Available
+                    </label>
+                    <label class="status-option">
+                        <input type="radio" name="status"> Out of Stock
+                    </label>
+                    <label class="status-option">
+                        <input type="radio" name="status"> Discontinued
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeEditProduct()">Cancel</button>
+                <button class="save-btn" onclick="saveProduct()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="admin-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Product</h3>
+                <button class="modal-close" onclick="closeAddProduct()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-input" placeholder="Enter product name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input">
+                        <option>Toiletries</option>
+                        <option>Food</option>
+                        <option>Drinks</option>
+                        <option>Stationery</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Selling Price (RM)</label>
+                    <input type="number" class="form-input" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Initial Stock</label>
+                    <input type="number" class="form-input" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Product Image URL</label>
+                    <input type="text" class="form-input" placeholder="img/product.jpg">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeAddProduct()">Cancel</button>
+                <button class="save-btn" onclick="saveProduct()">Add Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAYMENT SCREEN ==================== -->
+    <div id="payment-screen" class="screen">
+        <div class="payment-header">
+            <button class="back-btn" onclick="navigateTo('main-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="payment-title-box">
+                <span class="pay-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="pay-action">Checkout</span>
+            </div>
+        </div>
+
+        <div class="payment-body">
+            <div class="order-summary-card">
+                <div class="summary-title">Order Summary</div>
+                
+                <div id="checkout-items-list">
+                </div>
+
+                <div class="math-divider"></div>
+
+                <div class="math-block">
+                    <div class="math-row">
+                        <span>Subtotal Items (<span id="summary-qty-count">0</span>)</span>
+                        <span id="summary-subtotal">RM 0.00</span>
+                    </div>
+                    <div class="math-row">
+                        <span>Delivery Fees</span>
+                        <span id="summary-delivery">RM 4.90</span>
+                    </div>
+                    <div class="math-divider"></div>
+                    <div class="math-row total-row">
+                        <span>TOTAL</span>
+                        <span id="summary-total">RM 4.90</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-methods-title">Payment Methods</div>
+            
+            <div class="method-list">
+                <div class="method-container" id="method-duitnow" onclick="selectPaymentMethod('duitnow')">
+                    <div class="method-option">
+                        <div class="method-left">
+                            <div class="brand-logo-img-wrapper">
+                                <img src="https://images.seeklogo.com/logo-png/37/2/duit-now-logo-png_seeklogo-374361.png" class="brand-logo-img" alt="DuitNow Logo">
+                            </div>
+                            <span class="method-info-text">DuitNow QR</span>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <div class="method-container" id="method-tng" onclick="selectPaymentMethod('tng')">
+                    <div class="method-option">
+                        <div class="method-left">
+                            <div class="brand-logo-img-wrapper">
+                                <img src="https://images.seeklogo.com/logo-png/44/2/touch-n-go-payments-logo-png_seeklogo-444657.png" class="brand-logo-img" alt="TNG Logo">
+                            </div>
+                            <span class="method-info-text">Touch 'n Go eWallet</span>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                </div>
+
+                <div class="method-container" id="method-fpx" onclick="selectPaymentMethod('fpx')">
+                    <div class="method-option">
+                        <div class="method-left">
+                            <div class="brand-logo-img-wrapper">
+                                <img src="https://i0.wp.com/favorway.com.my/wp-content/uploads/2024/02/Logo-FPX.png?ssl=1" class="brand-logo-img" alt="FPX Corporate Logo">
+                            </div>
+                            <span class="method-info-text">Online Banking (FPX)</span>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                    
+                    <div class="bank-select-wrapper" onclick="event.stopPropagation();">
+                        <select class="bank-dropdown" id="bank-selector-input">
+                            <option value="" disabled selected>-- Select Your Bank --</option>
+                            <option value="Maybank2u">Maybank2u</option>
+                            <option value="CIMB Clicks">CIMB Clicks</option>
+                            <option value="Bank Islam">Bank Islam</option>
+                            <option value="RHB Now">RHB Now</option>
+                            <option value="Public Bank">Public Bank</option>
+                            <option value="AmBank">AmBank</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="method-container" id="method-card" onclick="selectPaymentMethod('card')">
+                    <div class="method-option">
+                        <div class="method-left">
+                            <div class="brand-logo-img-wrapper" style="color: #555; font-size: 18px;">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <span class="method-info-text">Credit / Debit Card</span>
+                        </div>
+                        <div class="radio-circle"></div>
+                    </div>
+                    
+                    <div class="card-input-wrapper" onclick="event.stopPropagation();">
+                        <input type="text" class="card-field" id="card-num-input" placeholder="CARD NUMBER" maxlength="19">
+                        <div class="card-row-split">
+                            <input type="text" class="card-field" id="card-expiry-input" placeholder="MM/YY" maxlength="5">
+                            <input type="text" class="card-field" id="card-cvv-input" placeholder="CVV" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-footer">
+            <div class="footer-total-box">
+                <span class="footer-total-price" id="footer-grand-total">RM 0.00</span>
+            </div>
+            <button class="pay-now-btn" onclick="executePayment()">PAY NOW</button>
+        </div>
+    </div>
+
+    <!-- ==================== CATEGORY SCREEN ==================== -->
+    <div id="category-screen" class="screen">
+        <div class="category-header">
+            <button class="back-btn" onclick="navigateTo('main-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="category-title-box">
+                <span class="category-title" id="category-title-display">Category</span>
+            </div>
+        </div>
+
+        <div class="category-body">
+            <div class="product-scroll-area">
+                <div class="product-grid" id="category-product-list">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PRODUCT DETAIL SCREEN ==================== -->
+    <div id="product-detail-screen" class="screen">
+        <div class="detail-header">
+            <button class="back-btn" onclick="navigateTo('main-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="detail-title-box">
+                <span class="detail-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="detail-action">Product Details</span>
+            </div>
+        </div>
+
+        <div class="detail-body" id="product-detail-container">
+        </div>
+    </div>
+
+    <!-- ==================== ME / PROFILE SCREEN ==================== -->
+    <div id="me-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('main-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">My Account</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <!-- Wallet Card -->
+            <div class="wallet-card">
+                <div class="wallet-header">
+                    <span class="wallet-title">COOP Mart e-wallet</span>
+                </div>
+                <div class="wallet-balance">
+                    <span class="balance-amount">RM 128.60</span>
+                </div>
+                <button class="topup-btn" onclick="showAppToast('Top up feature coming soon!', 'info')">
+                    <i class="fa-solid fa-plus-circle"></i> Top Up
+                </button>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="menu-list">
+                <div class="menu-item" onclick="navigateTo('history-screen')">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-clock-rotate-left menu-icon"></i>
+                        <span class="menu-text">History Purchase</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('points-screen')">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-star menu-icon" style="color: #FFB300;"></i>
+                        <span class="menu-text">Collected Point</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('redeem-screen')">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-gift menu-icon" style="color: #4CAF50;"></i>
+                        <span class="menu-text">Redeem Points</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('refund-screen')">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-file-pen menu-icon" style="color: #FF6B6B;"></i>
+                        <span class="menu-text">Refund Form</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </div>
+
+                <div class="menu-item" onclick="navigateTo('change-password-screen')">
+                    <div class="menu-left">
+                        <i class="fa-solid fa-key menu-icon" style="color: #FF9800;"></i>
+                        <span class="menu-text">Change Password</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== WISHLIST / FAVORITES SCREEN ==================== -->
+    <div id="wishlist-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('main-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">My Wishlist</span>
+            </div>
+        </div>
+
+        <div class="me-body" id="wishlist-body">
+            <!-- Products will be rendered here -->
+            <div class="product-scroll-area" style="padding: 0;">
+                <div class="product-grid" id="wishlist-product-grid">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ALL PRODUCTS SCREEN ==================== -->
+<div id="all-products-screen" class="screen">
+    <div class="me-header">
+        <button class="back-btn" onclick="navigateTo('main-screen')">
+            <i class="fa-solid fa-chevron-left"></i> BACK
+        </button>
+        <div class="me-title-box">
+            <span class="me-brand">COOPMART</span>
+            <span class="pay-divider">|</span>
+            <span class="me-action">All Products</span>
+        </div>
+    </div>
+
+    <div class="all-products-body">
+        <!-- Search Bar -->
+        <div class="search-container" style="padding: 12px 16px;">
+            <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+            <input type="text" class="search-bar" placeholder="Search all products..." id="all-products-search-bar" autocomplete="off">
+            <i class="fa-solid fa-sliders search-icon-right" onclick="showAppToast('Filter coming soon!', 'info')"></i>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chips" id="filter-chips-container">
+            <button class="filter-chip active" data-filter="all" onclick="filterAllProducts('all')">All</button>
+            <button class="filter-chip" data-filter="Food" onclick="filterAllProducts('Food')">🍔 Food</button>
+            <button class="filter-chip" data-filter="Toiletries" onclick="filterAllProducts('Toiletries')">🧴 Toiletries</button>
+            <button class="filter-chip" data-filter="Stationery" onclick="filterAllProducts('Stationery')">📝 Stationery</button>
+            <button class="filter-chip" data-filter="Drinks" onclick="filterAllProducts('Drinks')">🥤 Drinks</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-scroll-area" style="padding: 0 16px 80px 16px;">
+            <div class="product-grid" id="all-products-grid">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== NOTIFICATIONS SCREEN ==================== -->
+<div id="notifications-screen" class="screen">
+    <div class="me-header">
+        <button class="back-btn" onclick="navigateTo('main-screen')">
+            <i class="fa-solid fa-chevron-left"></i> BACK
+        </button>
+        <div class="me-title-box">
+            <span class="me-brand">COOPMART</span>
+            <span class="pay-divider">|</span>
+            <span class="me-action">Notifications</span>
+        </div>
+    </div>
+
+    <div class="notifications-body">
+        <!-- Notification Filter Tabs -->
+        <div class="notification-tabs">
+            <button class="notif-tab active" data-filter="all" onclick="filterNotifications('all')">All</button>
+            <button class="notif-tab" data-filter="promo" onclick="filterNotifications('promo')">🎉 Promos</button>
+            <button class="notif-tab" data-filter="reminder" onclick="filterNotifications('reminder')">⏰ Reminders</button>
+            <button class="notif-tab" data-filter="order" onclick="filterNotifications('order')">📦 Orders</button>
+        </div>
+
+        <!-- Mark All Read Button -->
+        <div class="notif-actions">
+            <button class="mark-read-btn" onclick="markAllNotificationsRead()">
+                 Mark All as Read
+            </button>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="notifications-list" id="notifications-container">
+            <!-- Dynamic content -->
+        </div>
+    </div>
+</div>
+
+    <!-- ==================== HISTORY SCREEN ==================== -->
+    <div id="history-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('me-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">History</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <div class="empty-state-card">
+                <i class="fa-solid fa-clock-rotate-left empty-icon"></i>
+                <p class="empty-text">No purchase yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== POINTS SCREEN ==================== -->
+    <div id="points-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('me-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">Collected Points</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <div class="empty-state-card">
+                <i class="fa-solid fa-star empty-icon" style="color: #FFB300;"></i>
+                <p class="empty-text">No points yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== REDEEM SCREEN ==================== -->
+    <div id="redeem-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('me-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">Redeem Points</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <div class="redeem-card">
+                <div class="redeem-icon">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+                <h3 class="redeem-title">🎉 Special Offer!</h3>
+                <p class="redeem-text">Purchase RM 100 and above, you will get free tumblr.</p>
+                <div class="redeem-tumbler-preview">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>Free Coop Mart Tumbler</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CHANGE PASSWORD SCREEN ==================== -->
+    <div id="change-password-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('me-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">Change Password</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <div class="form-card">
+                <div class="form-group">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-input" id="current-password" placeholder="Enter current password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-input" id="new-password" placeholder="Enter new password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-input" id="confirm-password" placeholder="Confirm new password">
+                </div>
+                <button class="submit-btn" onclick="handleChangePassword()">
+                    <i class="fa-solid fa-key"></i> Change Password
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== REFUND FORM SCREEN ==================== -->
+    <div id="refund-screen" class="screen">
+        <div class="me-header">
+            <button class="back-btn" onclick="navigateTo('me-screen')">
+                <i class="fa-solid fa-chevron-left"></i> BACK
+            </button>
+            <div class="me-title-box">
+                <span class="me-brand">COOPMART</span>
+                <span class="pay-divider">|</span>
+                <span class="me-action">Refund Form</span>
+            </div>
+        </div>
+
+        <div class="me-body">
+            <div class="form-card">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="refund-name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Student ID</label>
+                    <input type="text" class="form-input" id="refund-student-id" placeholder="Enter your student ID">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" id="refund-phone" placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="refund-email" placeholder="Enter your email address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Reason for Refund</label>
+                    <textarea class="form-textarea" id="refund-reason" placeholder="Please describe your reason for refund..." rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Upload Receipt</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="refund-receipt" accept="image/*,.pdf" style="display: none;">
+                        <button class="file-upload-btn" onclick="document.getElementById('refund-receipt').click();">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Choose File
+                        </button>
+                        <span class="file-name" id="file-name-display">No file chosen</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Feedback</label>
+                    <div class="star-rating">
+                        <i class="fa-regular fa-star star-rating-icon" data-value="1" onclick="setRating(1)"></i>
+                        <i class="fa-regular fa-star star-rating-icon" data-value="2" onclick="setRating(2)"></i>
+                        <i class="fa-regular fa-star star-rating-icon" data-value="3" onclick="setRating(3)"></i>
+                        <i class="fa-regular fa-star star-rating-icon" data-value="4" onclick="setRating(4)"></i>
+                        <i class="fa-regular fa-star star-rating-icon" data-value="5" onclick="setRating(5)"></i>
+                        <span class="rating-label" id="rating-label">Rate your experience</span>
+                    </div>
+                    <input type="hidden" id="refund-rating" value="0">
+                </div>
+                <button class="submit-btn" onclick="handleRefundSubmit()">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Refund
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
