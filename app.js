@@ -7,7 +7,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.8', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/shampoo.jpg', 
+        image: 'img/shampoo.jpg', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'Pantene Pro-V',
@@ -26,7 +26,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.7', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/dove.avif', 
+        image: 'img/dove.avif', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'Dove',
@@ -45,7 +45,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.6', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/herbal.webp', 
+        image: 'img/herbal.webp', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'Herbal Essences',
@@ -64,7 +64,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.9', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/loreal.webp', 
+        image: 'img/loreal.webp', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'L\'Oreal Paris',
@@ -83,7 +83,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.5', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/hns1.webp', 
+        image: 'img/hns1.webp', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'Head & Shoulders',
@@ -102,7 +102,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.4', 
         favorite: false, 
         fallbackIcon: 'fa-pump-soap', 
-        image: 'Img/tresemme.webp', 
+        image: 'img/tresemme.webp', 
         quantity: 0, 
         category: 'Toiletries',
         brand: 'TRESemmé',
@@ -123,7 +123,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.8', 
         favorite: true, 
         fallbackIcon: 'fa-bowl-food', 
-        image: 'Img/maggie.jpg', 
+        image: 'img/maggie.jpg', 
         quantity: 0, 
         category: 'Food',
         brand: 'Maggi Kari',
@@ -142,7 +142,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.6', 
         favorite: false, 
         fallbackIcon: 'fa-bowl-food', 
-        image: 'Img/indomie.jpg', 
+        image: 'img/indomie.jpg', 
         quantity: 0, 
         category: 'Food',
         brand: 'Indomie Mi Goreng',
@@ -161,7 +161,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.7', 
         favorite: false, 
         fallbackIcon: 'fa-bowl-food', 
-        image: 'Img/buldak.webp', 
+        image: 'img/buldak.webp', 
         quantity: 0, 
         category: 'Food',
         brand: 'Samyang',
@@ -180,7 +180,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.7', 
         favorite: false, 
         fallbackIcon: 'fa-box-tissue', 
-        image: 'Img/potato.jpg', 
+        image: 'img/potato.jpg', 
         quantity: 0, 
         category: 'Food',
         brand: 'Lay\'s Classic',
@@ -199,7 +199,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.5', 
         favorite: false, 
         fallbackIcon: 'fa-box-tissue', 
-        image: 'Img/pringles.jpg', 
+        image: 'img/pringles.jpg', 
         quantity: 0, 
         category: 'Food',
         brand: 'Pringles Original',
@@ -220,7 +220,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.9', 
         favorite: false, 
         fallbackIcon: 'fa-bottle-water', 
-        image: 'Img/mineral.jpg', 
+        image: 'img/mineral.jpg', 
         quantity: 0, 
         category: 'Drinks',
         brand: 'Spritzer',
@@ -239,7 +239,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.7', 
         favorite: false, 
         fallbackIcon: 'fa-bottle-water', 
-        image: 'Img/dasani.jpg', 
+        image: 'img/dasani.jpg', 
         quantity: 0, 
         category: 'Drinks',
         brand: 'Dasani',
@@ -258,7 +258,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.4', 
         favorite: false, 
         fallbackIcon: 'fa-bottle-water', 
-        image: 'Img/redbull.jpg', 
+        image: 'img/redbull.jpg', 
         quantity: 0, 
         category: 'Drinks',
         brand: 'Red Bull',
@@ -279,7 +279,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.5', 
         favorite: false, 
         fallbackIcon: 'fa-book-open', 
-        image: 'Img/notebook.jpg', 
+        image: 'img/notebook.jpg', 
         quantity: 0, 
         category: 'Stationery',
         brand: 'PaperOne A5',
@@ -298,7 +298,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.7', 
         favorite: false, 
         fallbackIcon: 'fa-book-open', 
-        image: 'Img/note.jpg', 
+        image: 'img/note.jpg', 
         quantity: 0, 
         category: 'Stationery',
         brand: 'Sticky Note',
@@ -317,7 +317,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.6', 
         favorite: false, 
         fallbackIcon: 'fa-pen', 
-        image: 'Img/pilot.webp', 
+        image: 'img/pilot.webp', 
         quantity: 0, 
         category: 'Stationery',
         brand: 'Pilot',
@@ -336,7 +336,7 @@ const DEFAULT_PRODUCTS = [
         rating: '4.8', 
         favorite: false, 
         fallbackIcon: 'fa-pen', 
-        image: 'Img/parker.jpg', 
+        image: 'img/parker.jpg', 
         quantity: 0, 
         category: 'Stationery',
         brand: 'Parker',
@@ -359,6 +359,8 @@ let currentUser = null;
 let currentSearchQuery = '';
 let currentCategory = null;
 let currentProductId = null;
+let allProductsFilter = 'all';
+let allProductsSearchQuery = '';
 
 // =========================================================================
 // 2. LOCAL STORAGE SYSTEMS (PERSISTENCE)
@@ -961,7 +963,37 @@ function executePayment() {
         return;
     }
 
-    if (selectedMethodId === 'fpx') {
+    if (selectedMethodId === 'coopewallet') {
+        const pinInput = document.getElementById('coop-pin-input');
+        const pin = pinInput ? pinInput.value.trim() : '';
+        
+        if (!pin || pin.length < 6) {
+            showAppToast('Please enter your 6-digit Coop E-Wallet PIN.', 'error');
+            if (pinInput) pinInput.classList.add('error');
+            return;
+        }
+        
+        // Validate PIN (simple check)
+        if (!/^\d{6}$/.test(pin)) {
+            showAppToast('Invalid PIN format. Please enter 6 digits.', 'error');
+            if (pinInput) pinInput.classList.add('error');
+            return;
+        }
+        
+        // Check balance (simulated)
+        const balance = 128.60;
+        const totalWithDiscount = orderValue - pointsDiscount;
+        
+        if (totalWithDiscount > balance) {
+            showAppToast(`❌ Insufficient balance! Available: RM ${balance.toFixed(2)}`, 'error');
+            return;
+        }
+        
+        triggerOrderCompletionProcess(
+            `Paid via Coop E-Wallet${usePoints ? ` (${pointsDiscount * 50} points used, saved RM ${pointsDiscount.toFixed(2)})` : ''}`,
+            pin
+        );
+    } else if (selectedMethodId === 'fpx') {
         const selectedBank = document.getElementById('bank-selector-input').value;
         if (!selectedBank) {
             showAppToast('Please select a banking portal from the drop-down to pay.', 'error');
@@ -986,7 +1018,7 @@ function executePayment() {
     }
 }
 
-function triggerOrderCompletionProcess(paymentSuccessMessageText) {
+function triggerOrderCompletionProcess(paymentSuccessMessageText, pin = null) {
     const payloadFooterBtn = document.querySelector('.pay-now-btn');
     if (!payloadFooterBtn) return;
     
@@ -996,7 +1028,28 @@ function triggerOrderCompletionProcess(paymentSuccessMessageText) {
     payloadFooterBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
 
     setTimeout(() => {
-        alert(`🎉 Transaction Approved!\n\n${paymentSuccessMessageText}\nYour order has been logged into the system.`);
+        let extraMessage = '';
+        if (selectedMethodId === 'coopewallet') {
+            extraMessage = `\nTransaction ID: COOP-${Date.now().toString().slice(-8)}`;
+        }
+        
+        alert(`🎉 Payment Successful!\n\n${paymentSuccessMessageText}${extraMessage}\nYour order has been confirmed.`);
+        
+        // Reset Coop E-Wallet state
+        if (selectedMethodId === 'coopewallet') {
+            const pinInput = document.getElementById('coop-pin-input');
+            if (pinInput) {
+                pinInput.value = '';
+                pinInput.classList.remove('error');
+            }
+            usePoints = false;
+            pointsDiscount = 0;
+            const btn = document.querySelector('.wallet-use-points-btn');
+            if (btn) {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fa-regular fa-star"></i> Use Points';
+            }
+        }
         
         products.forEach(p => p.quantity = 0);
         saveAppState();
@@ -1010,7 +1063,7 @@ function triggerOrderCompletionProcess(paymentSuccessMessageText) {
         payloadFooterBtn.innerHTML = originalBtnTextContent;
         
         navigateTo('main-screen');
-    }, 1500); 
+    }, 1500);
 }
 
 // =========================================================================
@@ -1415,9 +1468,6 @@ function renderWishlistProducts() {
 // =========================================================================
 // ALL PRODUCTS FUNCTIONS
 // =========================================================================
-
-let allProductsFilter = 'all';
-let allProductsSearchQuery = '';
 
 function navigateToAllProducts() {
     // Reset filters when navigating
@@ -2061,4 +2111,57 @@ function addChartInteractivity() {
             this.style.filter = 'none';
         });
     });
+}
+
+// =========================================================================
+// COOP E-WALLET FUNCTIONS
+// =========================================================================
+
+// State for wallet points usage
+let usePoints = false;
+let pointsDiscount = 0;
+
+// Toggle PIN visibility
+function togglePinVisibility(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+    } else {
+        input.type = 'password';
+        button.innerHTML = '<i class="fa-regular fa-eye"></i>';
+    }
+}
+
+// Toggle use points
+function toggleUsePoints() {
+    usePoints = !usePoints;
+    const btn = document.querySelector('.wallet-use-points-btn');
+    const display = document.getElementById('points-discount-display');
+    
+    if (usePoints) {
+        btn.classList.add('active');
+        btn.innerHTML = '<i class="fa-solid fa-star"></i> Points Applied';
+        
+        // Calculate points discount (50 points = RM 1)
+        const total = products.reduce((acc, p) => acc + (p.price * p.quantity), 0);
+        const availablePoints = 1230; // This should come from user data
+        const maxDiscount = Math.min(Math.floor(availablePoints / 50), total);
+        pointsDiscount = maxDiscount;
+        display.textContent = `- RM ${pointsDiscount.toFixed(2)}`;
+        display.style.color = '#4CAF50';
+        
+        showAppToast(`✅ ${pointsDiscount * 50} points used! Save RM ${pointsDiscount.toFixed(2)}`, 'success');
+    } else {
+        btn.classList.remove('active');
+        btn.innerHTML = '<i class="fa-regular fa-star"></i> Use Points';
+        pointsDiscount = 0;
+        display.textContent = '- RM 0.00';
+        display.style.color = '#4CAF50';
+    }
+    
+    // Update payment summary
+    renderCheckoutSummary();
 }
